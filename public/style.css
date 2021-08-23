@@ -1,0 +1,29 @@
+/*<------------main styling ----------->*/
+
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    line-height: 60px;
+}
+
+.line{
+    display: block;
+    height: 1px;
+    width: 90%;
+    margin: 10px auto;
+    background-color: rgba(54, 54, 54, 0.548);
+}
+
+.first-links{
+    display: flex;
+    flex-direction: column;
+}
+
+a{
+    color: rgb(34, 99, 238);
+}
+
+code{
+    font-size: 18px;
+}
