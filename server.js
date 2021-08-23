@@ -4,7 +4,8 @@ const app = express();
 require('dotenv').config();
 
 //init cors
-const cors = require('cors')
+const cors = require('cors');
+const { parse } = require('dotenv');
 app.use(cors({optionsSuccessStatus: 200}));
 
 //set stylesheet
@@ -18,9 +19,24 @@ app.get('/', (req,res)=>{
     
 });
 
-app.get("/api/2021-8-23", (req,res)=>{
-    res.json({unix: Date.now(), utc: new Date().toUTCString()});
-})
+app.get("/api/:date", (req,res)=>{
+    //req.params.date = {unix: Date.now(), utc: new Date().toUTCString()};
+    //res.json(req.params.date);
+    let reqDate = req.params.date;
+    let dateNow = new Date(reqDate);
+    if(!reqDate.match(/\d{5,}/) === false){
+        reqDate = parseInt(reqDate);
+        dateNow = new Date(reqDate);
+    }else if(dateNow.toUTCString() == 'Invalid Date'){
+        res.json({error : 'Invalid Date'})
+    };
+    res.json({unix: dateNow.valueOf(), utc: dateNow.toUTCString()});
+});
+
+app.get('/api/', (req,res)=>{
+    const date = new Date();
+    res.json({unix: date.valueOf(), utc: date.toUTCString()});
+});
 
 //set a port to listening for server requests
 const listener = app.listen(process.env.PORT, ()=>{
